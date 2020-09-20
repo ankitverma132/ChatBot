@@ -1,5 +1,20 @@
-const dialogflow = require('@google-cloud/dialogflow');
+const dialogflow = require('dialogflow');
 const uuid = require('uuid');
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const port = 5000;
+
+//Using body-parser as middleware
+//as we will get post request
+app.use(bodyParser.urlencoded({
+      extended : false
+}))
+
+//Creating route
+app.post('/send-msg', (req,res) => {
+
+})
 
 /**
  * Send a query to the dialogflow agent, and return the query result.
@@ -10,8 +25,10 @@ async function runSample(projectId = 'rn-bot-9fit') {
   const sessionId = uuid.v4();
 
   // Create a new session
-  const sessionClient = new dialogflow.SessionsClient();
-  const sessionPath = sessionClient.projectAgentSessionPath(projectId, sessionId);
+  const sessionClient = new dialogflow.SessionsClient({
+    keyFilename : "C:/Users/Ankit/Desktop/chat-bot/rn-bot-9fit-b4d970b3dba3.json"
+  });
+  const sessionPath = sessionClient.sessionPath(projectId, sessionId);
 
   // The text query request.
   const request = {
@@ -39,4 +56,4 @@ async function runSample(projectId = 'rn-bot-9fit') {
     console.log(`  No intent matched.`);
   }
 }
-runSample();
+runSample()
