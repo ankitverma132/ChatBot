@@ -1,7 +1,6 @@
 var $messages = $('.messages-content');
 var serverResponse = "wala";
 
-
 var suggession;
 //speech reco
 try {
@@ -28,7 +27,7 @@ recognition.onresult = (event) => {
 function listendom(no){
   console.log(no)
   //console.log(document.getElementById(no))
-document.getElementById("MSG").value= no.innerHTML;
+  document.getElementById("MSG").value= no.innerHTML;
   insertMessage();
 }
 
@@ -55,7 +54,7 @@ function insertMessage() {
     return false;
   }
   $('<div class="message message-personal">' + msg + '</div>').appendTo($('.mCSB_container')).addClass('new');
-  // fetchmsg() 
+   fetchmsg() 
   
   $('.message-input').val(null);
   updateScrollbar();
@@ -67,13 +66,12 @@ document.getElementById("mymsg").onsubmit = (e)=>{
   //Inserting msg in UI
   insertMessage();
   //Server response as hello
-  serverMessage("hello");
+  //serverMessage("hello");
   //For text to speech feature
-  speechSynthesis.speak( new SpeechSynthesisUtterance("hello"))
+ // speechSynthesis.speak( new SpeechSynthesisUtterance("hello"))
 }
 
 function serverMessage(response2) {
-
 
   if ($('.message-input').val() != '') {
     return false;
@@ -81,7 +79,6 @@ function serverMessage(response2) {
   $('<div class="message loading new"><figure class="avatar"><img src="css/bot.png" /></figure><span></span></div>').appendTo($('.mCSB_container'));
   updateScrollbar();
   
-
   setTimeout(function() {
     $('.message.loading').remove();
     $('<div class="message new"><figure class="avatar"><img src="css/bot.png" /></figure>' + response2 + '</div>').appendTo($('.mCSB_container')).addClass('new');
@@ -89,7 +86,6 @@ function serverMessage(response2) {
   }, 100 + (Math.random() * 20) * 100);
 
 }
-
 
 function fetchmsg(){
     //Will send request on his url
@@ -109,7 +105,7 @@ function fetchmsg(){
         }).then(res => res.json())
          .then(response => {
           console.log(response);
-        //  serverMessage(response.Reply);
+          serverMessage(response.Reply);
           speechSynthesis.speak( new SpeechSynthesisUtterance(response.Reply))
          })
           .catch(error => console.error('Error h:', error));
